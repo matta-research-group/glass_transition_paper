@@ -1,7 +1,7 @@
 # Matta Research Group Glass Transition Paper
 Code repository for Matta group glass transition temperature paper
 
-[![Preprint](https://joss.theoj.org/papers/8ddec851cf6ac8c0ae55ed4024b75b79/status.svg)](https://joss.theoj.org/papers/8ddec851cf6ac8c0ae55ed4024b75b79)
+# Add preprint badge
 
 # File Directory
 Example scripts
