@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 import subprocess
 # Building
-from swiftpol import build
+from swiftpol import build # Using most recent commit
 from swiftpol import parameterize
 from rdkit import Chem
 # Parameterization and export
@@ -28,24 +28,8 @@ sys = build.polymer_system_from_PDI(monomer_list=['O[C@H](C)C(=O)O[I]', 'OCC(=O)
                                copolymer=True,
                                acceptance=20)
 
-# Function to generate random coordinates for a molecule
-def generate_random_coordinates(mol):
-    """
-    Assign random 3D coordinates to all atoms in the molecule.
-    """
-    num_atoms = mol.GetNumAtoms()
-    conf = Chem.Conformer(num_atoms)
-    for i in range(num_atoms):
-        # Generate random x, y, z coordinates
-        x, y, z = random.uniform(-10, 10), random.uniform(-10, 10), random.uniform(-10, 10)
-        conf.SetAtomPosition(i, (x, y, z))
-    mol.RemoveAllConformers()  # Clear existing conformers from RDKit molecule
-    mol.AddConformer(conf, assignId=True)
-
-# Assign random coordinates to each molecule in the system
-for mol in sys.chain_rdkit:
-    generate_random_coordinates(mol)
-
+# Generate random coords
+sys.generate_conformers(random=True)
 sys.chains = [Molecule.from_rdkit(m) for m in sys.chain_rdkit]
 # Charge the polymer chains with selected charge model
 sys.charge_system('NAGL')
