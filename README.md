@@ -12,7 +12,7 @@ Code repository for Matta group glass transition temperature paper
 │   ├── temperature_ramp_NPT.py
 │   ├── tg_analysis_density.py
 │   └── tg_analysis_UMAP.py
-├── sample_data
+└── sample_data
     ├── PLGA_topology_files #pending
     ├── PLGA_trajectory_files #pending
     └── PLGA_UMAP_analysis #pending
