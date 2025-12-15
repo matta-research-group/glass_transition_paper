@@ -1,15 +1,21 @@
 # Matta Research Group Glass Transition Paper
 Code repository for Matta group glass transition temperature paper
 
-# Add preprint badge
+##### Add preprint badge
 
-# File Directory
+# Directory Tree
 ```
 .
 ├── example_scripts
 │   ├── build_example.py
 │   ├── temperature_ramp_NVT.py
-│   └── temperature_ramp_NPT.py
+│   ├── temperature_ramp_NPT.py
+│   ├── tg_analysis_density.py
+│   └── tg_analysis_UMAP.py
+├── sample_data
+    ├── PLGA_topology_files
+    ├── PLGA_trajectory_files
+    ├── PLGA_UMAP_analysis
 ```
 
 # Useful Links
