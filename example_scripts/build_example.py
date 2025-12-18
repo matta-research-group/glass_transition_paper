@@ -26,6 +26,7 @@ sys = build.polymer_system_from_PDI(monomer_list=['O[C@H](C)C(=O)O[I]', 'OCC(=O)
                                stereoisomerism_input=['A', 0.5, 'O[C@@H](C)C(=O)O[I]'], 
                                blockiness_target=[0.40, 'B'], 
                                copolymer=True,
+                               diblock = True,
                                acceptance=20)
 
 # Generate random coords
