@@ -12,10 +12,11 @@ Code repository for Matta group glass transition temperature paper
 │   ├── temperature_ramp_NPT.py
 │   ├── tg_analysis_density.py
 │   └── tg_analysis_UMAP.py
-└── sample_data
-    ├── PLGA_topology_files #pending
-    ├── PLGA_trajectory_files #pending
-    └── PLGA_UMAP_analysis #pending
+└── sample_data_analysis
+    ├── UMAP_outputs
+    │    └── Folder for each data replicate <POLYMER_CHARGING_DISPERSITY_DATE_TIME>
+    ├── monodisperse_sample_visualization.ipynb
+    └── polydisperse_sample_visualization.ipynb
 ```
 
 # Useful Links
