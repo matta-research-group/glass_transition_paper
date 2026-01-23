@@ -14,7 +14,7 @@ Code repository for Matta group glass transition temperature paper
 │   └── tg_analysis_UMAP.py
 └── sample_data_analysis
     ├── UMAP_outputs
-    │    └── Folder for each data replicate <POLYMER_CHARGING_DISPERSITY_DATE_TIME>
+    │    └── Folder for each data replicate <POLYMER_CHARGING_DISPERSITY_DATE_TIME> Note: NAGL = AshGC, MBIS = NAGL-MBIS
     ├── monodisperse_sample_visualization.ipynb
     └── polydisperse_sample_visualization.ipynb
 ```
