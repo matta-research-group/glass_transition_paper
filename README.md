@@ -1,7 +1,7 @@
 # Matta Research Group Glass Transition Paper
 Code repository for Matta group glass transition temperature paper
 
-##### Add preprint badge
+[![DOI](https://img.shields.io/badge/DOI-10.26434%2Fchemrxiv.10001947-blue)](https://doi.org/10.26434/chemrxiv.10001947)
 
 # Directory Tree
 ```
