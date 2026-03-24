@@ -51,7 +51,7 @@ for chain in u.atoms.fragments[:25]: # Select just main ensemble not residual mo
         # Loop through each frame in the trajectory
         for ts in u.trajectory:
             # Select the chain atoms
-            chain_temp = u.atoms[chain_idx].select_atoms('type not H') # Select only heavy atoms
+            chain_temp = u.atoms[chain_idx].select_atoms('not type H') # Select only heavy atoms
             pos = chain_temp.positions  # Get the positions of the atoms in the chain
 
             # Compute pairwise distances
