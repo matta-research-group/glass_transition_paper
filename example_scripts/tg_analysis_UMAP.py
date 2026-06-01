@@ -17,11 +17,13 @@ from sklearn.cluster import AgglomerativeClustering
 import umap
 # Optional - for progress bars
 from tqdm import tqdm
+# For silhouette score 
+from sklearn.metrics import silhouette_score
 
 directory= os.getcwd()
 results_dir = f'{directory}/{results}'
 os.chdir(results_dir)
-
+construct = '<CONSTRUCT NAME HERE>'
 # Initialize an empty DataFrame to store all observations
 df_full_results = pd.DataFrame()
 
@@ -80,7 +82,65 @@ for chain in u.atoms.fragments[:25]: # Select just main ensemble not residual mo
         columns=['UMAP1', 'UMAP2']
     )
     # Agglomerative Clustering using Sckit-learn - can adjust n_clusters as needed for dataset size
-    agg_clustering = AgglomerativeClustering(n_clusters=6)
+    silhouette_dict = {}
+    rows = []
+    for c_num in range(2, 11):
+        umap2_df_iter = umap_df.copy()
+
+        agg = AgglomerativeClustering(n_clusters=c_num)
+        labels = agg.fit_predict(umap2_df_iter)
+
+        assert len(labels) == len(umap2_df_iter)
+
+        umap2_df_iter[f'Cluster_{c_num}'] = labels
+        grid_size = 10  # granularity of the grid
+        umap2_df_iter['temp'] = np.arange(200,500.5,0.5)
+        #umap_df.set_index('temp', inplace=True)
+        import numpy as np
+        # Create a new column for grid squares
+        umap2_df_iter['Grid_X'] = (umap2_df_iter['UMAP1'] // grid_size).astype(int)
+        umap2_df_iter['Grid_Y'] = (umap2_df_iter['UMAP2'] // grid_size).astype(int)
+        sil = silhouette_score(umap_df, labels, metric="euclidean")
+ 
+        grid_counts = (
+            umap2_df_iter.groupby([f'Cluster_{c_num}', 'Grid_X', 'Grid_Y'])
+            .size()
+            .reset_index(name='Count')
+        )
+
+        most_dense_cluster = grid_counts.loc[
+            grid_counts['Count'].idxmax(), f'Cluster_{c_num}'
+        ]
+
+        umap2_df_iter[f'State_{c_num}'] = umap2_df_iter[f'Cluster_{c_num}'].apply(
+            lambda x: 'glassy' if x == most_dense_cluster else 'rubbery'
+        )
+
+        umap2_df_iter['Cluster_Change'] = (
+            umap2_df_iter[f'State_{c_num}'] != umap2_df_iter[f'State_{c_num}'].shift()
+        )
+        umap2_df_iter.loc[0, 'Cluster_Change'] = False
+
+        change_points = umap2_df_iter[umap2_df_iter['Cluster_Change']]['temp']
+
+        tg_value = None
+        for change_point_index in change_points.index:
+            next_states = umap2_df_iter[f'State_{c_num}'].iloc[
+                change_point_index:change_point_index + 10
+            ]
+            if all(next_states == 'rubbery'):
+                tg_value = umap2_df_iter.loc[change_point_index, 'temp']
+                break
+
+        rows.append({
+            "chain": f_index,
+            "k": c_num,
+            "Tg": tg_value,
+            "silhouette": sil
+        })
+        silhouette_dict[c_num]=sil
+    best_c_num, max_sil = max(silhouette_dict.items(), key=lambda kv: kv[1])
+    agg_clustering = AgglomerativeClustering(n_clusters=best_c_num)       
     clusters = agg_clustering.fit_predict(umap_df)
     umap_df['Cluster'] = clusters
     umap_df['temp'] = np.arange(200,500.5,0.5) # Assuming temperature ramp from 200K to 500K with 0.5K increments
