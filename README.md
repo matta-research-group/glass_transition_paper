@@ -3,6 +3,14 @@ Code repository for Automated and reproducible detection of the glass transition
 
 [![ChemRxiv](https://img.shields.io/badge/ChemRxiv-Preprint-orange)](https://chemrxiv.org/doi/full/10.26434/chemrxiv.10001947/v2)
 ![title](repo/ToC.png)
+
+Scripts to reproduce:
+- Polymer melt building
+- Annealing ramp
+- Analysis using unsupervised machine learning
+
+
+
 # Directory Tree
 ```
 .
